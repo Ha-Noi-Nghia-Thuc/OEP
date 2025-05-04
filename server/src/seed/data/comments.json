@@ -1,0 +1,25 @@
+[
+  {
+    "_id": { "$oid": "66364d8f1b2c3d4e5f6a7ba2" },
+    "userId": { "$oid": "66364a9a1b2c3d4e5f6a7b8f" },
+    "chapterId": { "$oid": "66364c8f1b2c3d4e5f6a7b99" },
+    "text": "Bài giảng chi tiết quá, cảm ơn thầy!",
+    "createdAt": { "$date": "2025-05-04T16:45:00Z" },
+    "updatedAt": { "$date": "2025-05-04T16:45:00Z" }
+  },
+  {
+    "_id": { "$oid": "66364d8f1b2c3d4e5f6a7ba3" },
+    "userId": { "$oid": "66364a9a1b2c3d4e5f6a7b90" },
+    "chapterId": { "$oid": "66364c8f1b2c3d4e5f6a7b9a" },
+    "createdAt": { "$date": "2025-05-04T16:46:00Z" },
+    "updatedAt": { "$date": "2025-05-04T16:46:00Z" }
+  },
+  {
+    "_id": { "$oid": "66364d8f1b2c3d4e5f6a7ba4" },
+    "userId": { "$oid": "66364a9a1b2c3d4e5f6a7b8f" },
+    "chapterId": { "$oid": "66364c8f1b2c3d4e5f6a7b9d" },
+    "text": "Nghi lễ Hầu đồng thật đặc sắc.",
+    "createdAt": { "$date": "2025-05-04T16:47:00Z" },
+    "updatedAt": { "$date": "2025-05-04T16:47:00Z" }
+  }
+]

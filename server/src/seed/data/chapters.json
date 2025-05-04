@@ -1,0 +1,73 @@
+[
+  {
+    "_id": { "$oid": "66364c8f1b2c3d4e5f6a7b99" },
+    "sectionId": { "$oid": "66364c0e1b2c3d4e5f6a7b95" },
+    "title": "Bài 1: Các nền văn hóa Hòa Bình, Bắc Sơn",
+    "type": "Text",
+    "content": "Nội dung chi tiết về đặc điểm, di chỉ của văn hóa Hòa Bình, Bắc Sơn...",
+    "order": 1,
+    "createdAt": { "$date": "2025-05-04T16:20:00Z" },
+    "updatedAt": { "$date": "2025-05-04T16:20:00Z" }
+  },
+  {
+    "_id": { "$oid": "66364c8f1b2c3d4e5f6a7b9a" },
+    "sectionId": { "$oid": "66364c0e1b2c3d4e5f6a7b95" },
+    "title": "Bài 2: Văn hóa Đông Sơn và trống đồng",
+    "type": "Video",
+    "videoUrl": "https://example.com/videos/dong_son.mp4",
+    "order": 2,
+    "createdAt": { "$date": "2025-05-04T16:21:00Z" },
+    "updatedAt": { "$date": "2025-05-04T16:21:00Z" }
+  },
+  {
+    "_id": { "$oid": "66364c8f1b2c3d4e5f6a7b9b" },
+    "sectionId": { "$oid": "66364c0e1b2c3d4e5f6a7b96" },
+    "title": "Bài 1: Khởi nghĩa Hai Bà Trưng",
+    "type": "Text",
+    "content": "Nguyên nhân, diễn biến, ý nghĩa của khởi nghĩa Hai Bà Trưng...",
+    "order": 1,
+    "createdAt": { "$date": "2025-05-04T16:22:00Z" },
+    "updatedAt": { "$date": "2025-05-04T16:22:00Z" }
+  },
+  {
+    "_id": { "$oid": "66364c8f1b2c3d4e5f6a7b9c" },
+    "sectionId": { "$oid": "66364c0e1b2c3d4e5f6a7b97" },
+    "title": "Bài 1: Thờ cúng tổ tiên của người Việt",
+    "type": "Text",
+    "content": "Ý nghĩa, nghi lễ và vai trò trong đời sống tinh thần.",
+    "order": 1,
+    "createdAt": { "$date": "2025-05-04T16:23:00Z" },
+    "updatedAt": { "$date": "2025-05-04T16:23:00Z" }
+  },
+  {
+    "_id": { "$oid": "66364c8f1b2c3d4e5f6a7b9d" },
+    "sectionId": { "$oid": "66364c0e1b2c3d4e5f6a7b97" },
+    "title": "Bài 2: Đạo Mẫu và nghi lễ Hầu đồng",
+    "type": "Video",
+    "videoUrl": "https://example.com/videos/dao_mau.mp4",
+    "order": 2,
+    "createdAt": { "$date": "2025-05-04T16:24:00Z" },
+    "updatedAt": { "$date": "2025-05-04T16:24:00Z" }
+  },
+  {
+    "_id": { "$oid": "66364c8f1b2c3d4e5f6a7b9e" },
+    "sectionId": { "$oid": "66364c0e1b2c3d4e5f6a7b97" },
+    "title": "Bài 3: Quiz Tín ngưỡng",
+    "type": "Quiz",
+    "quizQuestions": [
+      {
+        "questionText": "Tín ngưỡng phổ biến nhất của người Việt là gì?",
+        "options": ["Thờ Mẫu", "Thờ cúng tổ tiên", "Phật giáo"],
+        "correctAnswerIndex": 1
+      },
+      {
+        "questionText": "Nghi lễ Hầu đồng liên quan đến đạo nào?",
+        "options": ["Phật giáo", "Thiên Chúa giáo", "Đạo Mẫu"],
+        "correctAnswerIndex": 2
+      }
+    ],
+    "order": 3,
+    "createdAt": { "$date": "2025-05-04T16:25:00Z" },
+    "updatedAt": { "$date": "2025-05-04T16:25:00Z" }
+  }
+]

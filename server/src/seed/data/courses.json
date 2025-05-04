@@ -1,0 +1,54 @@
+[
+  {
+    "_id": { "$oid": "66364b3b1b2c3d4e5f6a7b91" },
+    "creatorId": { "$oid": "66364a9a1b2c3d4e5f6a7b8c" },
+    "creatorName": "Trần Văn Sử",
+    "title": "Lịch sử Việt Nam Đại Cương",
+    "description": "Khóa học cung cấp cái nhìn tổng quan về các giai đoạn chính trong lịch sử Việt Nam, từ thời tiền sử đến hiện đại.",
+    "category": "Lịch sử",
+    "imageUrl": "https://images.pexels.com/photos/1486861/pexels-photo-1486861.jpeg",
+    "status": "Published",
+    "sections": [],
+    "createdAt": { "$date": "2025-05-04T16:10:00Z" },
+    "updatedAt": { "$date": "2025-05-04T16:10:00Z" }
+  },
+  {
+    "_id": { "$oid": "66364b3b1b2c3d4e5f6a7b92" },
+    "creatorId": { "$oid": "66364a9a1b2c3d4e5f6a7b8d" },
+    "creatorName": "Lê Thị Mai",
+    "title": "Tìm hiểu Văn hóa Dân gian Việt Nam",
+    "description": "Khám phá sự phong phú của văn hóa dân gian Việt Nam qua các câu chuyện cổ tích, lễ hội, phong tục tập quán và nghệ thuật truyền thống.",
+    "category": "Văn hóa",
+    "imageUrl": "https://images.pexels.com/photos/5971330/pexels-photo-5971330.jpeg",
+    "status": "Published",
+    "sections": [],
+    "createdAt": { "$date": "2025-05-04T16:11:00Z" },
+    "updatedAt": { "$date": "2025-05-04T16:11:00Z" }
+  },
+  {
+    "_id": { "$oid": "66364b3b1b2c3d4e5f6a7b93" },
+    "creatorId": { "$oid": "66364a9a1b2c3d4e5f6a7b8e" },
+    "creatorName": "Nguyễn Chính Trị",
+    "title": "Hệ thống Chính trị Việt Nam Đương đại",
+    "description": "Phân tích cấu trúc, vai trò và hoạt động của hệ thống chính trị Việt Nam trong giai đoạn hiện nay.",
+    "category": "Chính trị",
+    "imageUrl": "https://images.pexels.com/photos/159775/library-la-trobe-university-students-study-159775.jpeg",
+    "status": "Draft",
+    "sections": [],
+    "createdAt": { "$date": "2025-05-04T16:12:00Z" },
+    "updatedAt": { "$date": "2025-05-04T16:12:00Z" }
+  },
+  {
+    "_id": { "$oid": "66364b3b1b2c3d4e5f6a7b94" },
+    "creatorId": { "$oid": "66364a9a1b2c3d4e5f6a7b8d" },
+    "creatorName": "Lê Thị Mai",
+    "title": "Ẩm thực Việt Nam: Hành trình Hương vị",
+    "description": "Tìm hiểu về sự đa dạng của ẩm thực ba miền Bắc-Trung-Nam, các món ăn đặc trưng và văn hóa ăn uống của người Việt.",
+    "category": "Văn hóa",
+    "imageUrl": "https://images.pexels.com/photos/2097090/pexels-photo-2097090.jpeg",
+    "status": "Published",
+    "sections": [],
+    "createdAt": { "$date": "2025-05-04T16:13:00Z" },
+    "updatedAt": { "$date": "2025-05-04T16:13:00Z" }
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "_id": { "$oid": "66364c0e1b2c3d4e5f6a7b95" },
+    "courseId": { "$oid": "66364b3b1b2c3d4e5f6a7b91" },
+    "title": "Chương 1: Thời kỳ Tiền sử và Sơ sử",
+    "description": "Các nền văn hóa đầu tiên trên lãnh thổ Việt Nam.",
+    "order": 1,
+    "chapters": [],
+    "createdAt": { "$date": "2025-05-04T16:15:00Z" },
+    "updatedAt": { "$date": "2025-05-04T16:15:00Z" }
+  },
+  {
+    "_id": { "$oid": "66364c0e1b2c3d4e5f6a7b96" },
+    "courseId": { "$oid": "66364b3b1b2c3d4e5f6a7b91" },
+    "title": "Chương 2: Thời kỳ Bắc thuộc và Đấu tranh giành độc lập",
+    "description": "Các cuộc khởi nghĩa và xây dựng nền tự chủ.",
+    "order": 2,
+    "chapters": [],
+    "createdAt": { "$date": "2025-05-04T16:16:00Z" },
+    "updatedAt": { "$date": "2025-05-04T16:16:00Z" }
+  },
+  {
+    "_id": { "$oid": "66364c0e1b2c3d4e5f6a7b97" },
+    "courseId": { "$oid": "66364b3b1b2c3d4e5f6a7b92" },
+    "title": "Chương 1: Tín ngưỡng dân gian",
+    "description": "Thờ cúng tổ tiên, thờ Mẫu, các tín ngưỡng khác.",
+    "order": 1,
+    "chapters": [],
+    "createdAt": { "$date": "2025-05-04T16:17:00Z" },
+    "updatedAt": { "$date": "2025-05-04T16:17:00Z" }
+  },
+  {
+    "_id": { "$oid": "66364c0e1b2c3d4e5f6a7b98" },
+    "courseId": { "$oid": "66364b3b1b2c3d4e5f6a7b92" },
+    "title": "Chương 2: Lễ hội truyền thống",
+    "description": "Các lễ hội lớn và ý nghĩa văn hóa.",
+    "order": 2,
+    "chapters": [],
+    "createdAt": { "$date": "2025-05-04T16:18:00Z" },
+    "updatedAt": { "$date": "2025-05-04T16:18:00Z" }
+  }
+]
