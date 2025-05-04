@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { EB_Garamond, Noto_Serif } from "next/font/google";
 import "./globals.css";
+import Providers from "./providers";
 
 const ebGaramond = EB_Garamond({
   subsets: ["vietnamese", "latin", "latin-ext"],
@@ -99,7 +100,7 @@ export default function RootLayout({
   return (
     <html lang="vi">
       <body className={`${ebGaramond.variable} ${notoSerif.variable}`}>
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
