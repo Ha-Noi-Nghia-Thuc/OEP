@@ -6,16 +6,17 @@ import helmet from "helmet";
 import morgan from "morgan";
 import * as mongoose from "mongoose";
 // ROUTE IMPORTS
+import courseRoutes from "./routes/course.route";
 
 // CONFIGURATIONS
 dotenv.config();
 
-const isProduction = process.env.NODE_ENV === "production";
-// if (isProduction) {
-//     mongoose.
-// }
+const MONGO_URL = process.env.MONGO_URL;
+const PORT = process.env.PORT || 5000;
 
 const app = express();
+
+// MIDDLEWARE
 app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
@@ -29,10 +30,24 @@ app.get("/", (req, res) => {
   res.send("Hello World !");
 });
 
-// SERVER
-const port = process.env.PORT || 5000;
-if (!isProduction) {
-  app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-  });
+app.use("/courses", courseRoutes);
+
+// Kiểm tra MONGO_URL
+if (!MONGO_URL) {
+  console.error("FATAL ERROR: MONGO_URL is not defined.");
+  process.exit(1); // Thoát nếu không có URL MongoDB
 }
+
+// Kết nối MongoDB TRƯỚC KHI khởi động server
+mongoose
+  .connect(MONGO_URL)
+  .then(() => {
+    console.log("MongoDB connected successfully.");
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.error("MongoDB connection error:", error);
+    process.exit(1);
+  });

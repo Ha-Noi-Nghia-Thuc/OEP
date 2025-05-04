@@ -2,9 +2,9 @@
   {
     "_id": { "$oid": "66364c8f1b2c3d4e5f6a7b99" },
     "sectionId": { "$oid": "66364c0e1b2c3d4e5f6a7b95" },
-    "title": "Bài 1: Các nền văn hóa Hòa Bình, Bắc Sơn",
+    "title": "Bài 1: Văn hóa Hòa Bình, Bắc Sơn - Những cư dân đầu tiên",
     "type": "Text",
-    "content": "Nội dung chi tiết về đặc điểm, di chỉ của văn hóa Hòa Bình, Bắc Sơn...",
+    "content": "Đặc điểm chính của Văn hóa Hòa Bình, Bắc Sơn: công cụ lao động, phương thức sinh sống, đời sống vật chất và tinh thần.",
     "order": 1,
     "createdAt": { "$date": "2025-05-04T16:20:00Z" },
     "updatedAt": { "$date": "2025-05-04T16:20:00Z" }
@@ -12,9 +12,9 @@
   {
     "_id": { "$oid": "66364c8f1b2c3d4e5f6a7b9a" },
     "sectionId": { "$oid": "66364c0e1b2c3d4e5f6a7b95" },
-    "title": "Bài 2: Văn hóa Đông Sơn và trống đồng",
+    "title": "Bài 2: Văn hóa Đông Sơn và biểu tượng Trống Đồng",
     "type": "Video",
-    "videoUrl": "https://example.com/videos/dong_son.mp4",
+    "videoUrl": "https://example.com/videos/van_hoa_dong_son.mp4",
     "order": 2,
     "createdAt": { "$date": "2025-05-04T16:21:00Z" },
     "updatedAt": { "$date": "2025-05-04T16:21:00Z" }
@@ -22,9 +22,9 @@
   {
     "_id": { "$oid": "66364c8f1b2c3d4e5f6a7b9b" },
     "sectionId": { "$oid": "66364c0e1b2c3d4e5f6a7b96" },
-    "title": "Bài 1: Khởi nghĩa Hai Bà Trưng",
+    "title": "Bài 1: Khởi nghĩa Hai Bà Trưng (40-43)",
     "type": "Text",
-    "content": "Nguyên nhân, diễn biến, ý nghĩa của khởi nghĩa Hai Bà Trưng...",
+    "content": "Bối cảnh lịch sử, nguyên nhân, diễn biến chính và ý nghĩa lịch sử của cuộc khởi nghĩa Hai Bà Trưng.",
     "order": 1,
     "createdAt": { "$date": "2025-05-04T16:22:00Z" },
     "updatedAt": { "$date": "2025-05-04T16:22:00Z" }
@@ -32,9 +32,9 @@
   {
     "_id": { "$oid": "66364c8f1b2c3d4e5f6a7b9c" },
     "sectionId": { "$oid": "66364c0e1b2c3d4e5f6a7b97" },
-    "title": "Bài 1: Thờ cúng tổ tiên của người Việt",
+    "title": "Bài 1: Tín ngưỡng thờ cúng tổ tiên của người Việt",
     "type": "Text",
-    "content": "Ý nghĩa, nghi lễ và vai trò trong đời sống tinh thần.",
+    "content": "Nguồn gốc, ý nghĩa nhân văn, các nghi lễ cơ bản và vai trò của tín ngưỡng thờ cúng tổ tiên trong đời sống tinh thần người Việt.",
     "order": 1,
     "createdAt": { "$date": "2025-05-04T16:23:00Z" },
     "updatedAt": { "$date": "2025-05-04T16:23:00Z" }
@@ -42,9 +42,9 @@
   {
     "_id": { "$oid": "66364c8f1b2c3d4e5f6a7b9d" },
     "sectionId": { "$oid": "66364c0e1b2c3d4e5f6a7b97" },
-    "title": "Bài 2: Đạo Mẫu và nghi lễ Hầu đồng",
+    "title": "Bài 2: Đạo Mẫu và nghi lễ Hầu đồng - Di sản văn hóa phi vật thể",
     "type": "Video",
-    "videoUrl": "https://example.com/videos/dao_mau.mp4",
+    "videoUrl": "https://example.com/videos/dao_mau_hau_dong.mp4",
     "order": 2,
     "createdAt": { "$date": "2025-05-04T16:24:00Z" },
     "updatedAt": { "$date": "2025-05-04T16:24:00Z" }
@@ -52,7 +52,7 @@
   {
     "_id": { "$oid": "66364c8f1b2c3d4e5f6a7b9e" },
     "sectionId": { "$oid": "66364c0e1b2c3d4e5f6a7b97" },
-    "title": "Bài 3: Quiz Tín ngưỡng",
+    "title": "Bài 3: Kiểm tra nhanh về Tín ngưỡng",
     "type": "Quiz",
     "quizQuestions": [
       {
@@ -69,5 +69,25 @@
     "order": 3,
     "createdAt": { "$date": "2025-05-04T16:25:00Z" },
     "updatedAt": { "$date": "2025-05-04T16:25:00Z" }
+  },
+  {
+    "_id": { "$oid": "66364c8f1b2c3d4e5f6a7bab" },
+    "sectionId": { "$oid": "66364c0e1b2c3d4e5f6a7ba9" },
+    "title": "Bài 1: Tình hình Việt Nam dưới ách đô hộ Pháp cuối TK 19",
+    "type": "Text",
+    "content": "Phân tích chính sách cai trị của Pháp, tình hình kinh tế, xã hội và các phong trào yêu nước trước khi ĐKNT ra đời.",
+    "order": 1,
+    "createdAt": { "$date": "2025-05-04T16:26:00Z" },
+    "updatedAt": { "$date": "2025-05-04T16:26:00Z" }
+  },
+  {
+    "_id": { "$oid": "66364c8f1b2c3d4e5f6a7bac" },
+    "sectionId": { "$oid": "66364c0e1b2c3d4e5f6a7ba9" },
+    "title": "Bài 2: Ảnh hưởng của các tư tưởng Duy Tân từ bên ngoài",
+    "type": "Text",
+    "content": "Tìm hiểu về ảnh hưởng của Duy Tân Minh Trị (Nhật Bản), cách mạng Tân Hợi (Trung Quốc) và các tư tưởng cải cách khác đến các sĩ phu yêu nước Việt Nam.",
+    "order": 2,
+    "createdAt": { "$date": "2025-05-04T16:27:00Z" },
+    "updatedAt": { "$date": "2025-05-04T16:27:00Z" }
   }
 ]
