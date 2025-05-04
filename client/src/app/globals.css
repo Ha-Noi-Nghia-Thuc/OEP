@@ -1,21 +1,1195 @@
+@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap");
+
+/* globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
+/* --- Đặt màu nền và chữ mặc định cho light mode --- */
+html,
+body,
+#root,
+.app {
+  height: 100%;
+  width: 100%;
+  @apply font-body text-sm;
+  @apply bg-background text-foreground; /* Sử dụng biến nền và chữ mặc định */
+}
+
+/* --- Định nghĩa biến màu CSS --- */
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* --- Biến HSL cơ bản cho Light Mode (Mực Tàu & Giấy Dó) --- */
+    --background-hsl: 40 30% 95%; /* Giấy dó ngà */
+    --foreground-hsl: 30 15% 10%; /* Mực tàu đen/nâu */
+    --card-hsl: 40 30% 93%; /* Giấy dó hơi khác biệt chút */
+    --card-foreground-hsl: 30 15% 10%; /* Mực tàu */
+    --popover-hsl: 40 30% 95%; /* Giấy dó ngà */
+    --popover-foreground-hsl: 30 15% 10%; /* Mực tàu */
+    --primary-hsl: 0 65% 45%; /* Đỏ son */
+    --primary-foreground-hsl: 40 30% 95%; /* Chữ màu giấy dó trên nền đỏ */
+    --secondary-hsl: 30 10% 60%; /* Nâu/Xám tro */
+    --secondary-foreground-hsl: 30 15% 10%; /* Chữ màu mực tàu */
+    --muted-hsl: 40 15% 85%; /* Be/Xám nhạt */
+    --muted-foreground-hsl: 40 10% 50%; /* Chữ màu nâu/xám vừa */
+    --accent-hsl: 35 40% 50%; /* Vàng nâu cũ */
+    --accent-foreground-hsl: 30 15% 10%; /* Chữ màu mực tàu */
+    --destructive-hsl: 0 70% 50%; /* Đỏ cảnh báo */
+    --destructive-foreground-hsl: 40 30% 95%; /* Chữ màu giấy dó */
+    --border-hsl: 30 20% 25%; /* Nâu đất/Đen nhạt */
+    --input-hsl: 30 20% 35%; /* Nâu đất nhạt hơn chút cho input */
+    --ring-hsl: 0 65% 45%; /* Ring màu đỏ son */
+
+    /* --- Biến màu Component (Light Mode) - Trỏ về biến HSL --- */
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 10% 3.9%;
+
+    /* --- Biến màu Sidebar (Light Mode) --- */
+    /* Có thể dùng màu khác biệt nếu muốn, ví dụ nền đậm hơn */
+    --sidebar-background: 0 0% 98%; /* Giấy dó hơi đậm hơn */
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%; /* Xám tro nhạt hơn cho accent sidebar */
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%; /* Viền nâu nhạt hơn */
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* --- Biến màu Chart (Ví dụ - Trỏ về biến HSL) --- */
+    --chart-1: 12 76% 61%; /* Đỏ son */
+    --chart-2: 173 58% 39%; /* Vàng nâu */
+    --chart-3: 197 37% 24%; /* Nâu đất */
+    --chart-4: 43 74% 66%; /* Xám tro */
+    --chart-5: 27 87% 67%; /* Đỏ son nhạt */
+
+    /* --- Biến border radius --- */
+    --radius: 0.5rem; /* Hoặc giữ nguyên 0.5rem nếu dùng shadcn */
+  }
+
+  /* --- Định nghĩa biến màu cho Dark Mode --- */
+  .dark {
+    /* --- Biến HSL cơ bản cho Dark Mode --- */
+    --background-hsl: 30 10% 10%; /* Nâu đen rất sẫm */
+    --foreground-hsl: 40 15% 85%; /* Chữ màu be nhạt (giấy dó sáng) */
+    --card-hsl: 30 10% 15%; /* Nền card hơi sáng hơn background */
+    --card-foreground-hsl: 40 15% 85%; /* Chữ be nhạt */
+    --popover-hsl: 30 10% 8%; /* Nền popover gần như đen */
+    --popover-foreground-hsl: 40 15% 85%; /* Chữ be nhạt */
+    --primary-hsl: 0 65% 55%; /* Đỏ son sáng hơn chút cho dark mode */
+    --primary-foreground-hsl: 0 0% 10%; /* Chữ đen trên nền đỏ */
+    --secondary-hsl: 30 10% 30%; /* Xám đậm */
+    --secondary-foreground-hsl: 40 15% 85%; /* Chữ be nhạt */
+    --muted-hsl: 30 10% 25%; /* Xám đậm hơn secondary */
+    --muted-foreground-hsl: 40 10% 60%; /* Chữ xám nhạt hơn */
+    --accent-hsl: 35 40% 60%; /* Vàng nâu sáng hơn chút */
+    --accent-foreground-hsl: 35 20% 10%; /* Chữ đen/nâu trên nền vàng */
+    --destructive-hsl: 0 70% 60%; /* Đỏ cảnh báo sáng hơn */
+    --destructive-foreground-hsl: 0 0% 10%; /* Chữ đen */
+    --border-hsl: 30 10% 35%; /* Viền xám đậm */
+    --input-hsl: 30 10% 40%; /* Viền input sáng hơn chút */
+    --ring-hsl: 0 65% 55%; /* Ring đỏ son sáng */
+
+    /* --- Biến màu Component (Dark Mode) - Trỏ về biến HSL --- */
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+
+    /* --- Biến màu Sidebar (Dark Mode) --- */
+    --sidebar-background: 240 5.9% 10%; /* Giữ nguyên nền tối */
+    --sidebar-foreground: 240 4.8% 95.9%; /* Chữ sáng */
+    --sidebar-primary: 224.3 76.3% 48%; /* Đỏ son sáng */
+    --sidebar-primary-foreground: 0 0% 100%; /* Chữ tối */
+    --sidebar-accent: 240 3.7% 15.9%; /* Xám accent tối hơn */
+    --sidebar-accent-foreground: 240 4.8% 95.9%; /* Chữ sáng */
+    --sidebar-border: 240 3.7% 15.9%; /* Viền tối */
+    --sidebar-ring: 217.2 91.2% 59.8%; /* Ring đỏ son sáng */
+
+    /* --- Biến màu Chart (Ví dụ - Dark Mode) --- */
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%; /* Đỏ son nhạt hơn nữa */
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+/* --- Áp dụng border mặc định và các tùy chỉnh cơ bản --- */
+@layer base {
+  * {
+    @apply border-border; /* Áp dụng màu border mặc định */
+  }
+  body {
+    /* Đã áp dụng bg-background và text-foreground ở trên */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* --- Tùy chỉnh input type color --- */
+input[type="color"] {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* --- Cập nhật các lớp tiện ích tùy chỉnh --- */
+
+/* Filepond */
+.filepond--panel-root {
+  @apply !bg-card; /* Dùng màu nền card */
+}
+
+.filepond--drop-label.filepond--drop-label label {
+  @apply cursor-pointer;
+}
+
+.filepond--drop-label {
+  @apply !text-muted-foreground; /* Chữ màu muted */
+  @apply cursor-pointer;
+  @apply hover:!bg-muted hover:!text-foreground; /* Hover với màu muted */
+}
+
+/* Component Classes */
+
+/* Search Page */
+.search {
+  @apply flex flex-col bg-background text-foreground h-full mx-auto w-3/4;
+}
+
+.search__title {
+  @apply font-normal text-2xl mt-14; /* Giữ nguyên */
+}
+
+.search__subtitle {
+  @apply text-muted-foreground mb-3; /* Dùng màu muted */
+}
+
+.search__content {
+  @apply w-full flex flex-col-reverse md:flex-row pb-8 pt-2 gap-8; /* Giữ nguyên */
+}
+
+.search__courses-grid {
+  @apply basis-3/5 grid grid-cols-1 xl:grid-cols-2 gap-6 auto-rows-fr; /* Giữ nguyên */
+}
+
+.search__selected-course {
+  @apply basis-2/5 min-w-[350px] h-fit border-2 border-primary bg-card overflow-hidden rounded-lg; /* Dùng border primary, nền card */
+}
+
+/* Selected Course Component */
+.selected-course {
+  @apply overflow-hidden py-9 px-9; /* Giữ nguyên */
+}
+
+.selected-course__title {
+  @apply text-foreground font-semibold text-3xl; /* Chữ foreground */
+}
+
+.selected-course__author {
+  @apply text-muted-foreground text-sm pt-3; /* Chữ muted */
+}
+
+.selected-course__enrollment-count {
+  @apply font-bold text-foreground; /* Chữ foreground */
+}
+
+.selected-course__content {
+  @apply mt-5; /* Giữ nguyên */
+}
+
+.selected-course__description {
+  @apply text-muted-foreground mb-4; /* Chữ muted */
+}
+
+.selected-course__sections {
+  @apply mt-6; /* Giữ nguyên */
+}
+
+.selected-course__sections-title {
+  @apply text-foreground/90 font-semibold mb-2; /* Chữ foreground mờ hơn chút */
+}
+
+.selected-course__footer {
+  @apply flex justify-between items-center mt-5; /* Giữ nguyên */
+}
+
+.selected-course__price {
+  @apply text-primary font-semibold text-2xl; /* Màu primary */
+}
+
+/* Completion Page */
+.completion {
+  @apply flex flex-col h-full items-center justify-center bg-background text-foreground; /* Giữ nguyên */
+}
+
+.completion__content {
+  @apply text-center; /* Giữ nguyên */
+}
+
+.completion__icon {
+  /* Giữ màu xanh lá cây hoặc đổi sang màu accent/primary nếu muốn */
+  @apply mb-4 rounded-full bg-green-500 p-3 inline-flex items-center justify-center;
+}
+
+.completion__title {
+  @apply text-4xl font-bold mb-3; /* Giữ nguyên */
+}
+
+.completion__message {
+  @apply mb-1; /* Giữ nguyên */
+}
+
+.completion__action {
+  /* Đổi màu nền từ secondary-700 sang accent hoặc primary */
+  @apply mt-2 flex justify-center bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg px-4 py-2 cursor-pointer;
+}
+
+/* Landing Page */
+.landing {
+  @apply w-3/4; /* Giữ nguyên */
+}
+
+.landing__hero {
+  @apply flex justify-between items-center mt-12 h-[500px] rounded-lg bg-card; /* Nền card */
+}
+
+.landing__hero-content {
+  @apply basis-1/2 px-16 mx-auto; /* Giữ nguyên */
+}
+
+.landing__title {
+  @apply text-4xl font-bold mb-4; /* Giữ nguyên */
+}
+
+.landing__description {
+  @apply text-lg text-muted-foreground mb-8; /* Chữ muted */
+}
+
+.landing__cta {
+  @apply w-fit; /* Giữ nguyên */
+}
+
+.landing__cta-button {
+  @apply bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-md; /* Màu primary */
+}
+
+.landing__hero-images {
+  @apply basis-1/2 h-full relative overflow-hidden rounded-r-lg; /* Giữ nguyên */
+}
+
+.landing__hero-image {
+  @apply object-cover transition-opacity duration-500 opacity-0; /* Giữ nguyên */
+}
+
+.landing__hero-image--active {
+  @apply opacity-100; /* Giữ nguyên */
+}
+
+.landing__featured {
+  @apply mx-auto py-12 mt-10; /* Giữ nguyên */
+}
+
+.landing__featured-title {
+  @apply text-2xl font-semibold mb-4; /* Giữ nguyên */
+}
+
+.landing__featured-description {
+  @apply text-muted-foreground mb-8; /* Chữ muted */
+}
+
+.landing__tags {
+  @apply flex flex-wrap gap-4 mb-8; /* Giữ nguyên */
+}
+
+.landing__tag {
+  @apply px-3 py-1 bg-secondary rounded-full text-secondary-foreground text-sm; /* Nền secondary, chữ secondary-foreground */
+}
+
+.landing__courses {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6; /* Giữ nguyên */
+}
+
+/* Landing Skeleton */
+/* (Giữ nguyên các lớp skeleton, chúng dùng màu mặc định của component cha hoặc màu trung tính) */
+.landing-skeleton {
+  @apply w-3/4;
+}
+.landing-skeleton__hero {
+  @apply flex justify-between items-center mt-12 h-[500px] rounded-lg bg-card animate-pulse;
+}
+.landing-skeleton__hero-content {
+  @apply basis-1/2 px-16 mx-auto;
+}
+.landing-skeleton__title {
+  @apply h-8 w-48 mb-4 bg-muted rounded animate-pulse;
+}
+.landing-skeleton__subtitle {
+  @apply h-4 w-96 mb-2 bg-muted rounded animate-pulse;
+}
+.landing-skeleton__subtitle-secondary {
+  @apply h-4 w-72 mb-8 bg-muted rounded animate-pulse;
+}
+.landing-skeleton__button {
+  @apply w-40 h-10 bg-primary/50 rounded animate-pulse;
+}
+.landing-skeleton__hero-image {
+  @apply basis-1/2 h-full rounded-r-lg bg-muted animate-pulse;
+}
+.landing-skeleton__featured {
+  @apply mx-auto py-12 mt-10;
+}
+.landing-skeleton__featured-title {
+  @apply h-6 w-48 mb-4 bg-muted rounded animate-pulse;
+}
+.landing-skeleton__featured-description {
+  @apply h-4 w-full max-w-2xl mb-8 bg-muted rounded animate-pulse;
+}
+.landing-skeleton__tags {
+  @apply flex flex-wrap gap-4 mb-8;
+}
+.landing-skeleton__tag {
+  @apply w-24 h-6 rounded-full bg-secondary/50 animate-pulse;
+}
+.landing-skeleton__courses {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6;
+}
+.landing-skeleton__course-card {
+  @apply h-[300px] rounded-lg bg-card animate-pulse;
+}
+
+/* User Courses Page */
+.user-courses {
+  @apply w-full h-full; /* Giữ nguyên */
+}
+
+.user-courses__grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-7 mt-6 w-full; /* Giữ nguyên */
+}
+
+/* Dashboard Layout */
+.dashboard {
+  @apply min-h-screen w-full bg-background flex; /* Nền background */
+}
+
+.dashboard__content {
+  @apply flex flex-1 overflow-hidden; /* Giữ nguyên */
+}
+
+.dashboard__main {
+  /* Nền có thể là background hoặc card tùy thiết kế */
+  @apply flex-grow min-h-screen transition-all duration-500 ease-in-out overflow-y-auto bg-card;
+}
+
+.dashboard__main--not-course {
+  @apply bg-background; /* Trang không phải course thì dùng nền background */
+}
+
+.dashboard__body {
+  @apply px-8 py-4; /* Giữ nguyên */
+}
+
+/* Course Page */
+.course {
+  @apply flex h-[100vh]; /* Giữ nguyên */
+}
+
+.course__container {
+  @apply flex-grow mx-auto; /* Giữ nguyên */
+}
+
+.course__breadcrumb {
+  @apply mb-6; /* Giữ nguyên */
+}
+
+.course__path {
+  @apply text-muted-foreground text-sm mb-2; /* Chữ muted */
+}
+
+.course__current-chapter {
+  @apply text-foreground; /* Chữ foreground */
+}
+
+.course__title {
+  @apply text-2xl text-foreground font-semibold my-4; /* Chữ foreground */
+}
+
+.course__header {
+  @apply flex items-center justify-between; /* Giữ nguyên */
+}
+
+.course__instructor {
+  @apply relative mr-2 flex items-center gap-2; /* Giữ nguyên */
+}
+
+.course__avatar {
+  @apply w-10 h-10; /* Giữ nguyên */
+}
+
+.course__avatar-fallback {
+  @apply bg-secondary text-secondary-foreground; /* Nền secondary, chữ secondary-foreground */
+}
+
+.course__instructor-name {
+  @apply text-muted-foreground text-sm font-[500]; /* Chữ muted */
+}
+
+.course__navigation {
+  @apply flex items-center; /* Giữ nguyên */
+}
+
+.course__chapter-count {
+  @apply mr-2 text-sm text-muted-foreground; /* Chữ muted */
+}
+
+.course__nav-button {
+  @apply border-none bg-primary text-primary-foreground hover:bg-primary/90; /* Màu primary */
+}
+
+.course__nav-button--prev {
+  @apply mr-2; /* Giữ nguyên */
+}
+
+.course__video {
+  @apply mb-6 !border-none; /* Giữ nguyên */
+}
+
+.course__video-container {
+  @apply h-[50vh] flex justify-center items-center p-0 m-0 bg-black rounded-lg; /* Nền đen cho video */
+}
+
+.course__no-video {
+  @apply text-center text-muted-foreground; /* Chữ muted */
+}
+
+.course__content {
+  @apply flex gap-4 mt-12; /* Giữ nguyên */
+}
+
+.course__tabs {
+  @apply w-full md:w-2/3; /* Giữ nguyên */
+}
+
+.course__tabs-list {
+  @apply flex justify-start gap-10 border-b border-border; /* Thêm border */
+}
+
+.course__tab {
+  /* Thay đổi màu khi active/inactive bằng state trong component */
+  @apply text-md w-20 pb-2 border-b-2 border-transparent text-muted-foreground data-[state=active]:border-primary data-[state=active]:text-primary;
+}
+
+.course__tab-content {
+  @apply mt-5; /* Giữ nguyên */
+}
+
+.course__tab-card {
+  @apply !border-none shadow-none bg-transparent; /* Nền trong suốt */
+}
+
+.course__tab-header {
+  @apply p-2; /* Giữ nguyên */
+}
+
+.course__tab-body {
+  @apply p-2; /* Giữ nguyên */
+}
+
+.course__instructor-card {
+  @apply w-1/3 h-min border border-border p-10 bg-card rounded-lg; /* Nền card, có border */
+}
+
+.course__instructor-info {
+  @apply flex flex-col items-start p-0 px-4; /* Giữ nguyên */
+}
+
+.course__instructor-header {
+  @apply flex items-center gap-3 flex-shrink-0 mb-7; /* Giữ nguyên */
+}
+
+.course__instructor-avatar {
+  @apply w-10 h-10; /* Giữ nguyên */
+}
+
+.course__instructor-avatar-fallback {
+  @apply bg-secondary text-secondary-foreground; /* Màu secondary */
+}
+
+.course__instructor-details {
+  @apply flex flex-col items-start; /* Giữ nguyên */
+}
+
+.course__instructor-name {
+  @apply text-lg font-medium text-foreground; /* Chữ foreground */
+}
+
+.course__instructor-title {
+  @apply text-sm text-muted-foreground; /* Chữ muted */
+}
+
+.course__instructor-bio {
+  @apply text-sm text-foreground; /* Chữ foreground */
+}
+
+/* Chapters Sidebar */
+.chapters-sidebar {
+  /* Sử dụng biến sidebar */
+  @apply bg-sidebar border-x border-sidebar-border text-sidebar-foreground overflow-y-auto transition-all duration-500 ease-in-out animate-in fade-in slide-in-from-left flex-shrink-0;
+  height: 100vh;
+}
+
+.chapters-sidebar__title {
+  @apply text-lg font-bold pt-9 pb-6 px-8 text-sidebar-foreground; /* Chữ sidebar */
+}
+
+.chapters-sidebar__divider {
+  @apply border-sidebar-border; /* Border sidebar */
+}
+
+.chapters-sidebar__section {
+  @apply min-w-[300px]; /* Giữ nguyên */
+}
+
+.chapters-sidebar__section-header {
+  @apply cursor-pointer px-8 py-6 hover:bg-sidebar-accent; /* Hover accent sidebar */
+}
+
+.chapters-sidebar__section-title-wrapper {
+  @apply flex justify-between items-center; /* Giữ nguyên */
+}
+
+.chapters-sidebar__section-number {
+  @apply text-sidebar-foreground/70 text-sm; /* Chữ sidebar mờ */
+}
+
+.chapters-sidebar__chevron {
+  @apply text-sidebar-foreground/70 w-4 h-4; /* Chữ sidebar mờ */
+}
+
+.chapters-sidebar__section-title {
+  @apply text-sidebar-foreground/90 font-semibold; /* Chữ sidebar */
+}
+
+.chapters-sidebar__section-content {
+  @apply pt-8 pb-8 bg-sidebar/80; /* Nền sidebar mờ hơn */
+}
+
+.chapters-sidebar__progress {
+  @apply flex justify-between items-center gap-5 mb-2 px-7; /* Giữ nguyên */
+}
+
+.chapters-sidebar__progress-bars {
+  @apply flex-grow flex gap-1; /* Giữ nguyên */
+}
+
+.chapters-sidebar__progress-bar {
+  @apply h-1 flex-grow rounded-full bg-sidebar-border; /* Nền là border sidebar */
+}
+
+.chapters-sidebar__progress-bar--completed {
+  @apply bg-sidebar-primary; /* Màu primary sidebar */
+}
+
+.chapters-sidebar__trophy {
+  @apply bg-sidebar-primary rounded-full p-3 flex items-center justify-center; /* Màu primary sidebar */
+}
+
+.chapters-sidebar__trophy-icon {
+  @apply text-sidebar-primary-foreground w-4 h-4; /* Chữ primary foreground sidebar */
+}
+
+.chapters-sidebar__progress-text {
+  @apply text-sidebar-foreground/70 text-xs mt-3 mb-5 px-7; /* Chữ sidebar mờ */
+}
+
+.chapters-sidebar__chapter {
+  @apply flex gap-3 items-center px-7 py-4 text-sidebar-foreground cursor-pointer hover:bg-sidebar-accent; /* Hover accent sidebar */
+}
+
+.chapters-sidebar__chapter--current {
+  @apply bg-sidebar-accent text-sidebar-accent-foreground; /* Nền accent, chữ accent foreground sidebar */
+}
+
+.chapters-sidebar__chapter-check {
+  /* Giữ màu xanh lá hoặc đổi sang primary sidebar */
+  @apply bg-green-500 rounded-full p-1;
+}
+
+.chapters-sidebar__check-icon {
+  @apply text-white w-4 h-4; /* Giữ trắng hoặc đổi sang primary foreground sidebar */
+}
+
+.chapters-sidebar__chapter-number {
+  @apply border border-sidebar-border rounded-full w-6 h-6 flex items-center justify-center text-xs text-sidebar-foreground/70; /* Border và chữ sidebar mờ */
+}
+
+.chapters-sidebar__chapter-number--current {
+  @apply bg-sidebar-primary text-sidebar-primary-foreground; /* Màu primary sidebar */
+}
+
+.chapters-sidebar__chapter-title {
+  @apply flex-1 text-sm text-sidebar-foreground/90; /* Chữ sidebar */
+}
+
+.chapters-sidebar__chapter-title--completed {
+  @apply text-sidebar-foreground/50 line-through; /* Chữ sidebar mờ hơn, gạch ngang */
+}
+
+.chapters-sidebar__chapter-title--current {
+  /* Màu chữ khi current đã được xử lý ở .chapters-sidebar__chapter--current */
+}
+
+.chapters-sidebar__text-icon {
+  @apply text-sidebar-foreground/70 ml-2 w-4 h-4; /* Chữ sidebar mờ */
+}
+
+/* Droppable Component */
+/* Điều chỉnh màu nền cho phù hợp theme */
+.droppable-section {
+  @apply mb-4 p-2 rounded;
+}
+.droppable-section--even {
+  @apply bg-secondary/20;
+} /* Nền secondary mờ */
+.droppable-section--odd {
+  @apply bg-muted/20;
+} /* Nền muted mờ */
+.droppable-section__header {
+  @apply flex justify-between items-center mb-2 bg-border/10 p-1 rounded;
+} /* Nền border mờ */
+.droppable-section__title-wrapper {
+  @apply w-full flex flex-col gap-1;
+}
+.droppable-section__title-container {
+  @apply w-full flex items-center justify-between;
+}
+.droppable-section__title {
+  @apply flex items-center text-foreground;
+} /* Chữ foreground */
+.droppable-section__description {
+  @apply text-sm text-muted-foreground ml-6;
+} /* Chữ muted */
+.droppable-chapter {
+  @apply flex justify-between items-center ml-4 mb-1 rounded px-1;
+}
+.droppable-chapter--even {
+  @apply bg-secondary/30;
+} /* Nền secondary mờ */
+.droppable-chapter--odd {
+  @apply bg-muted/30;
+} /* Nền muted mờ */
+.droppable-chapter__title {
+  @apply flex items-center text-foreground;
+} /* Chữ foreground */
+.droppable-chapter__actions {
+  @apply flex items-center gap-[1px];
+}
+.droppable-chapter__button {
+  @apply p-1 text-muted-foreground hover:text-primary;
+} /* Chữ muted, hover primary */
+
+/* Chapter Modal */
+.chapter-modal {
+  @apply flex flex-col;
+}
+.chapter-modal__header {
+  @apply flex justify-between items-center mb-4;
+}
+.chapter-modal__title {
+  @apply text-2xl font-bold text-foreground;
+} /* Chữ foreground */
+.chapter-modal__close {
+  @apply text-muted-foreground hover:text-foreground;
+} /* Chữ muted, hover foreground */
+.chapter-modal__form {
+  @apply space-y-4;
+}
+.chapter-modal__video {
+  @apply space-y-2;
+}
+.chapter-modal__video-label {
+  @apply text-sm font-medium text-foreground;
+} /* Chữ foreground */
+.chapter-modal__preview {
+  @apply flex flex-col items-center space-x-2;
+}
+.chapter-modal__toggle {
+  @apply flex items-center space-x-2;
+}
+.chapter-modal__toggle-label {
+  @apply text-sm font-medium text-foreground;
+} /* Chữ foreground */
+.chapter-modal__actions {
+  @apply flex justify-end space-x-2 mt-6;
+} /* Button dùng màu primary/secondary mặc định */
+
+/* Section Modal */
+.section-modal {
+  @apply flex flex-col;
+}
+.section-modal__header {
+  @apply flex justify-between items-center mb-4;
+}
+.section-modal__title {
+  @apply text-2xl font-bold text-foreground;
+} /* Chữ foreground */
+.section-modal__close {
+  @apply text-muted-foreground hover:text-foreground;
+} /* Chữ muted, hover foreground */
+.section-modal__form {
+  @apply space-y-4;
+}
+.section-modal__actions {
+  @apply flex justify-end space-x-2 mt-6;
+} /* Button dùng màu primary/secondary mặc định */
+
+/* Teacher Courses Page */
+.teacher-courses {
+  @apply w-full h-full;
+}
+.teacher-courses__header {
+  @apply bg-primary hover:bg-primary/90 text-primary-foreground;
+} /* Màu primary */
+.teacher-courses__grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7 mt-6 w-full;
+}
+
+/* Accordion Sections */
+.accordion-section {
+  @apply border-x border-b border-border overflow-hidden first:border-t first:rounded-t-lg last:rounded-b-lg;
+} /* Dùng border mặc định */
+.accordion-section__trigger {
+  @apply hover:bg-muted/50 bg-background/50 px-4 py-3 text-foreground;
+} /* Hover muted mờ, nền background mờ */
+.accordion-section__title {
+  @apply font-medium;
+} /* Bỏ màu cụ thể */
+.accordion-section__content {
+  @apply bg-card/50 px-4 py-4 text-foreground;
+} /* Nền card mờ */
+.accordion-section__chapter {
+  @apply flex items-center text-muted-foreground py-1;
+} /* Chữ muted */
+
+/* Course Card */
+.course-card {
+  @apply flex flex-col w-full h-[340px] xl:h-[380px] border border-transparent bg-card text-foreground overflow-hidden cursor-pointer hover:border-primary transition duration-200 rounded-lg; /* Nền card, hover border primary */
+}
+.course-card__header {
+  @apply h-[200px] xl:h-[240px] p-0 overflow-hidden;
+} /* Giảm chiều cao ảnh */
+.course-card__image {
+  @apply w-full h-full object-cover transition-transform;
+}
+.course-card__content {
+  @apply flex-grow flex flex-col justify-between w-full h-full p-4;
+} /* Giảm padding */
+.course-card__title {
+  @apply text-md lg:text-lg font-semibold line-clamp-2 mb-2;
+} /* Thêm margin bottom */
+.course-card__footer {
+  @apply p-0 flex justify-between items-center;
+} /* Thêm items-center */
+.course-card__category {
+  @apply text-xs bg-secondary rounded-full px-2 py-1 text-secondary-foreground;
+} /* Nền secondary, chữ nhỏ hơn */
+.course-card__price {
+  @apply text-primary font-bold text-md;
+} /* Màu primary */
+
+/* Course Card Search */
+.course-card-search {
+  @apply bg-card overflow-hidden rounded-lg hover:bg-muted/50 transition duration-200 flex flex-col cursor-pointer border-2 h-full; /* Nền card, hover muted mờ */
+}
+.course-card-search--selected {
+  @apply border-primary;
+} /* Border primary */
+.course-card-search--unselected {
+  @apply border-border;
+} /* Border mặc định */
+.course-card-search__image-container {
+  @apply relative w-auto pt-[56.25%];
+}
+.course-card-search__image {
+  @apply object-cover transition-transform;
+}
+.course-card-search__content {
+  @apply p-4 flex flex-col justify-between flex-grow;
+}
+.course-card-search__title {
+  @apply font-semibold line-clamp-1 text-foreground;
+} /* Chữ foreground */
+.course-card-search__description {
+  @apply text-sm mt-1 line-clamp-2 text-muted-foreground;
+} /* Chữ muted */
+.course-card-search__teacher {
+  @apply text-muted-foreground text-sm;
+} /* Chữ muted */
+.course-card-search__footer {
+  @apply flex justify-between items-center mt-1;
+}
+.course-card-search__price {
+  @apply text-primary font-semibold;
+} /* Màu primary */
+.course-card-search__enrollment {
+  @apply text-muted-foreground text-sm;
+} /* Chữ muted */
+
+/* Course Card Teacher */
+.course-card-teacher {
+  @apply w-full h-[400px] p-0 bg-card border border-border text-foreground overflow-hidden hover:border-primary transition duration-200 flex flex-col rounded-lg; /* Nền card, border, hover border primary */
+}
+.course-card-teacher__header {
+  @apply p-0 h-[200px] overflow-hidden;
+} /* Giảm chiều cao ảnh */
+.course-card-teacher__image {
+  @apply rounded-t-lg w-[100%] h-[100%] object-cover transition-transform;
+}
+.course-card-teacher__content {
+  @apply w-full p-4 flex-grow flex flex-col justify-between text-muted-foreground;
+} /* Chữ muted */
+.course-card-teacher__title {
+  @apply text-foreground text-md md:text-lg line-clamp-2 overflow-hidden mb-2;
+} /* Chữ foreground, margin */
+.course-card-teacher__category {
+  @apply bg-secondary px-2 py-1 mt-1 mb-3 rounded-full w-fit text-xs text-secondary-foreground;
+} /* Nền secondary, chữ nhỏ hơn, margin */
+.course-card-teacher__edit-button {
+  @apply rounded w-full bg-primary border-none hover:bg-primary/90 text-primary-foreground cursor-pointer mb-2;
+} /* Màu primary, margin */
+.course-card-teacher__delete-button {
+  @apply rounded w-full bg-destructive border-none text-destructive-foreground hover:bg-destructive/90 cursor-pointer;
+} /* Màu destructive */
+
+/* Course Preview */
+.course-preview {
+  @apply space-y-10;
+}
+.course-preview__container {
+  @apply w-full bg-card py-8 px-10 flex flex-col gap-5 rounded-lg;
+} /* Nền card */
+.course-preview__image-wrapper {
+  @apply mb-2 bg-muted rounded;
+} /* Nền muted */
+.course-preview__title {
+  @apply text-foreground text-3xl font-bold mb-2;
+} /* Chữ foreground */
+
+/* Custom Modal */
+.custom-modal__overlay {
+  @apply fixed inset-0 bg-black/60 z-40;
+} /* Độ mờ cao hơn */
+.custom-modal__content {
+  @apply fixed inset-y-0 right-0 w-full max-w-md bg-background shadow-lg z-50 overflow-y-auto border-l border-border;
+} /* Nền background, thêm border */
+.custom-modal__inner {
+  @apply p-6;
+}
+
+/* Footer */
+.footer {
+  @apply bg-card bottom-0 w-full py-8 mt-10 text-center text-sm text-muted-foreground border-t border-border;
+} /* Nền card, chữ muted, thêm border top */
+.footer__links {
+  @apply mt-2;
+}
+.footer__link {
+  @apply text-primary mx-2 hover:underline;
+} /* Màu primary, hover gạch chân */
+
+/* Loading */
+.loading {
+  @apply fixed inset-0 flex gap-2 items-center justify-center bg-background/80 backdrop-blur-sm;
+} /* Thêm backdrop-blur */
+.loading__spinner {
+  @apply w-6 h-6 animate-spin text-primary;
+} /* Màu primary */
+.loading__text {
+  @apply text-sm font-medium text-primary;
+} /* Màu primary */
+
+/* Navbar (Dashboard) */
+.navbar {
+  @apply w-full mb-6 px-4 sm:px-8 pt-7 z-10;
+}
+.navbar__container {
+  @apply flex justify-between items-center w-full my-3;
+}
+.navbar__search {
+  @apply flex justify-between items-center gap-2 sm:gap-5 relative;
+} /* Thêm relative */
+.navbar__search-input {
+  @apply bg-card pl-10 sm:pl-14 pr-4 py-2 rounded-lg text-muted-foreground placeholder:text-muted-foreground/70 hover:text-foreground hover:bg-muted/50 focus:bg-muted/50 focus:text-foreground focus:ring-1 focus:ring-ring transition-all duration-300 text-sm sm:text-base;
+} /* Nền card, hover/focus muted mờ */
+.navbar__search-icon {
+  @apply absolute left-3 sm:left-5 top-1/2 transform -translate-y-1/2 text-muted-foreground transition-all duration-300 group-hover:text-foreground;
+} /* Group hover */
+.navbar__actions {
+  @apply flex items-center gap-3 sm:gap-6;
+}
+.navbar__dark-mode-button {
+  @apply rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground;
+} /* Chữ muted, hover foreground */
+.navbar__dark-mode-icon {
+  @apply cursor-pointer w-5 h-5 sm:w-6 sm:h-6;
+}
+.navbar__sidebar-trigger {
+  @apply text-muted-foreground hover:text-foreground transition-colors;
+}
+
+/* Toolbar */
+.toolbar {
+  @apply flex items-center justify-between gap-4 w-full mb-4;
+}
+.toolbar__search {
+  @apply w-full px-5 h-10 bg-card placeholder:text-muted-foreground/70 text-muted-foreground border border-input rounded-md focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring hover:border-ring;
+} /* Nền card, border input, hover ring */
+.toolbar__select {
+  @apply h-10 w-[180px] bg-card text-muted-foreground border border-input rounded-md focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring hover:border-ring;
+} /* Nền card, border input, hover ring */
+.toolbar__select-item {
+  @apply cursor-pointer hover:!bg-accent hover:!text-accent-foreground;
+} /* Hover accent */
+
+/* Wizard Stepper */
+/* Điều chỉnh màu sắc */
+.wizard-stepper {
+  @apply w-1/2 mb-4 flex flex-col items-center;
+}
+.wizard-stepper__container {
+  @apply w-full flex items-center justify-between mb-2;
+}
+.wizard-stepper__step {
+  @apply flex flex-col items-center;
+}
+.wizard-stepper__circle {
+  @apply w-8 h-8 flex items-center justify-center rounded-full mb-2 text-sm;
+} /* Thêm text-sm */
+.wizard-stepper__circle--completed {
+  @apply bg-green-500 text-white;
+} /* Giữ xanh lá */
+.wizard-stepper__circle--current {
+  @apply bg-primary text-primary-foreground;
+} /* Màu primary */
+.wizard-stepper__circle--upcoming {
+  @apply border border-border text-muted-foreground;
+} /* Border, chữ muted */
+.wizard-stepper__text {
+  @apply text-sm;
+}
+.wizard-stepper__text--active {
+  @apply text-foreground font-medium;
+} /* Chữ foreground */
+.wizard-stepper__text--inactive {
+  @apply text-muted-foreground;
+} /* Chữ muted */
+.wizard-stepper__line {
+  @apply flex-grow h-[2px] self-center mt-0 mx-2;
+} /* Điều chỉnh line */
+.wizard-stepper__line--completed {
+  @apply bg-green-500;
+} /* Giữ xanh lá */
+.wizard-stepper__line--incomplete {
+  @apply bg-border;
+} /* Màu border */
+
+/* NonDashboard Navbar */
+.nondashboard-navbar {
+  @apply w-full flex justify-center bg-card border-b border-border;
+} /* Nền card, thêm border bottom */
+.nondashboard-navbar__container {
+  @apply flex justify-between items-center w-3/4 py-4;
+} /* Giảm padding y */
+.nondashboard-navbar__search {
+  @apply flex justify-between items-center gap-14 relative;
+} /* Thêm relative */
+.nondashboard-navbar__brand {
+  @apply font-bold text-lg sm:text-xl text-primary hover:text-primary/80;
+} /* Màu primary */
+.nondashboard-navbar__search-input {
+  @apply bg-background pl-10 sm:pl-14 pr-4 py-2 rounded-lg text-muted-foreground placeholder:text-muted-foreground/70 hover:text-foreground hover:bg-muted/30 focus:bg-muted/30 focus:text-foreground focus:ring-1 focus:ring-ring transition-all duration-300 text-sm sm:text-base;
+} /* Nền background, hover/focus muted mờ */
+.nondashboard-navbar__search-icon {
+  @apply absolute left-3 sm:left-5 top-1/2 transform -translate-y-1/2 text-muted-foreground transition-all duration-300 group-hover:text-foreground;
+}
+.nondashboard-navbar__actions {
+  @apply flex items-center gap-2 sm:gap-4;
+}
+.nondashboard-navbar__notification-button {
+  @apply relative w-8 h-8 bg-secondary/50 rounded-full flex items-center justify-center text-secondary-foreground hover:bg-secondary/70;
+} /* Nền secondary mờ */
+.nondashboard-navbar__notification-indicator {
+  @apply absolute top-0 right-0 bg-accent h-2 w-2 rounded-full;
+} /* Màu accent */
+.nondashboard-navbar__notification-icon {
+  @apply w-4 h-4 sm:w-5 sm:h-5;
+}
+.nondashboard-navbar__auth-button--login {
+  @apply text-primary hover:bg-primary/10 px-3 sm:px-4 py-1.5 sm:py-2 rounded-md border-primary border text-sm sm:text-base;
+} /* Màu primary, border primary */
+.nondashboard-navbar__auth-button--signup {
+  @apply bg-primary px-3 sm:px-4 py-1.5 sm:py-2 rounded-md hover:bg-primary/90 text-primary-foreground text-sm sm:text-base;
+} /* Màu primary */
+
+/* Shared Notification Settings */
+.notification-settings {
+  @apply space-y-4;
+}
+.notification-settings__form {
+  @apply space-y-4;
+}
+.notification-settings__fields {
+  @apply space-y-6;
+}
+.notification-settings__submit {
+  @apply !mt-8 text-primary-foreground bg-primary hover:bg-primary/90;
+} /* Màu primary */
+
+/* Header */
+.header {
+  @apply mb-7 flex justify-between items-center;
+}
+.header__title {
+  @apply text-3xl font-bold text-foreground;
+} /* Chữ foreground */
+.header__subtitle {
+  @apply text-sm text-muted-foreground mt-1;
+} /* Chữ muted */
+
+/* AppSidebar */
+.app-sidebar__menu {
+  @apply mt-5 group-data-[collapsible=icon]:mt-7;
+}
+.app-sidebar__logo-container {
+  @apply flex justify-between items-center gap-5 pl-6 pr-4 h-14 w-full group-data-[collapsible=icon]:ml-0 group-data-[collapsible=icon]:w-auto group-data-[collapsible=icon]:px-3 group-data-[collapsible=icon]:justify-center border-b border-sidebar-border;
+} /* Điều chỉnh padding, thêm border */
+.app-sidebar__logo-wrapper {
+  @apply flex items-center gap-3;
+} /* Giảm gap */
+.app-sidebar__logo {
+  @apply transition duration-200 group-data-[collapsible=icon]:group-hover:opacity-80 w-auto h-6;
+} /* Set height */
+.app-sidebar__title {
+  @apply text-lg font-extrabold text-sidebar-primary group-data-[collapsible=icon]:hidden;
+} /* Màu primary sidebar */
+.app-sidebar__collapse-icon {
+  @apply text-sidebar-foreground/70 w-5 h-5 group-data-[collapsible=icon]:hidden hover:text-sidebar-foreground;
+}
+.app-sidebar__nav-menu {
+  @apply mt-4 gap-1 px-3;
+} /* Giảm mt, thêm padding x, gap */
+.app-sidebar__nav-item {
+  @apply group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:py-2 rounded-md;
+} /* Giảm padding y */
+.app-sidebar__nav-button {
+  @apply gap-3 px-3 py-2 rounded-md hover:bg-sidebar-accent group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:p-2 text-sidebar-foreground/80 hover:text-sidebar-foreground data-[active=true]:bg-sidebar-accent data-[active=true]:text-sidebar-accent-foreground;
+} /* Điều chỉnh padding, gap, màu active */
+.app-sidebar__nav-link {
+  @apply relative flex items-center w-full;
+} /* Thêm w-full */
+.app-sidebar__nav-text {
+  @apply font-medium text-sm ml-3 group-data-[collapsible=icon]:hidden;
+} /* Giảm ml */
+/* Bỏ active indicator nếu dùng màu nền */
+/* .app-sidebar__active-indicator { @apply absolute right-0 top-0 h-full w-[4px] bg-sidebar-primary; } */
+.app-sidebar__signout {
+  @apply text-destructive pl-6 mt-auto mb-4 hover:text-destructive/80 group-data-[collapsible=icon]:px-0 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:flex;
+} /* Màu destructive, điều chỉnh vị trí */
+
+/* NonDashboard Layout */
+.nondashboard-layout {
+  @apply flex flex-col min-h-screen w-full bg-background;
+} /* Nền background */
+.nondashboard-layout__main {
+  @apply flex flex-grow w-full h-full justify-center items-start pt-10;
+} /* Thêm padding top */
+
+/* Auth Layout */
+.auth-layout {
+  @apply h-full w-full bg-background;
+} /* Nền background */
+.auth-layout__main {
+  @apply w-full flex h-full justify-center items-center;
+}
+
+/* Root Layout */
+.root-layout {
+  @apply mx-auto w-full h-full;
+} /* Bỏ justify/items-center */
+
+/* --- Group Hover Effects (Giữ lại và kiểm tra) --- */
+.group .course-card__image:hover,
+.group .course-card-search__image:hover,
+.group .course-card-teacher__image:hover {
+  @apply scale-105;
+}
+
+.group:hover .add-chapter-button__icon,
+.group:hover .add-chapter-button__text {
+  @apply text-primary/80; /* Hover màu primary nhạt hơn */
+}
+
+[data-collapsible="icon"] .group:hover .app-sidebar__logo {
+  @apply opacity-80;
+}
+
+/* Add Chapter Button */
+.add-chapter-button {
+  @apply border-none text-primary hover:text-primary/80;
+} /* Màu primary */
+.add-chapter-button__icon {
+  @apply mr-1 h-4 w-4;
+} /* Bỏ màu cụ thể */
+.add-chapter-button__text {
+  /* Bỏ màu cụ thể */
+}
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
