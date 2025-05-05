@@ -19,6 +19,8 @@ body,
   height: 100%;
   width: 100%;
   @apply font-body text-sm leading-relaxed bg-background text-foreground;
+  scroll-padding-top: 120px;
+  scroll-behavior: smooth;
 }
 
 /* --- Định nghĩa biến màu CSS --- */
@@ -220,7 +222,7 @@ input[type="color"] {
 
 /* Selected Course Component */
 .selected-course {
-  @apply overflow-hidden py-9 px-9; /* Giữ nguyên */
+  @apply overflow-hidden py-9 md:py-0 px-9; /* Giữ nguyên */
 }
 
 .selected-course__title {
@@ -253,10 +255,6 @@ input[type="color"] {
 
 .selected-course__footer {
   @apply flex justify-between items-center mt-5; /* Giữ nguyên */
-}
-
-.selected-course__price {
-  @apply text-primary font-semibold text-2xl; /* Màu primary */
 }
 
 /* Completion Page */

@@ -5,6 +5,15 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import * as mongoose from "mongoose";
+
+import "./models/user.model";
+import "./models/course.model";
+import "./models/section.model";
+import "./models/chapter.model";
+import "./models/enrollment.model";
+import "./models/comment.model";
+import "./models/chapter-progress.model";
+
 // ROUTE IMPORTS
 import courseRoutes from "./routes/course.route";
 

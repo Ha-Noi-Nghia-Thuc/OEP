@@ -4,8 +4,10 @@ import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { useCarousel } from "@/hooks/useCarousel";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useGetCoursesQuery } from "@/state/api";
+import CourseCardSearch from "@/components/CourseCardSearch";
+import { useRouter } from "next/navigation";
 
 const LoadingSkeleton = () => {
   return (
@@ -41,7 +43,18 @@ const LoadingSkeleton = () => {
 };
 
 const Landing = () => {
-  const currentImage = useCarousel({ totalImages: 3 });
+  const router = useRouter();
+  const { data: courses, isLoading, isError } = useGetCoursesQuery({});
+
+  const handleCourseClick = (courseId: string) => {
+    router.push(`/search?id=${courseId}`);
+  };
+
+  console.log("courses: ", courses);
+
+  if (isLoading) {
+    return <LoadingSkeleton />;
+  }
 
   return (
     <motion.div
@@ -68,7 +81,7 @@ const Landing = () => {
           </p>
           <div className="landing__cta">
             <Link href="/search">
-              <div className="landing__cta-button">Khám Phá Khóa Học Ngay</div>
+              <div className="landing__cta-button">Khám phá khóa học ngay</div>
             </Link>
           </div>
         </div>
@@ -90,26 +103,39 @@ const Landing = () => {
         viewport={{ amount: 0.3, once: true }}
         className="landing__featured"
       >
-        <h2 className="landing__featured-title">Các Khóa Học Nổi Bật</h2>
+        <h2 className="landing__featured-title">Các khóa học nổi bật</h2>
         <p className="landing__featured-description">
           Tuyển chọn những khóa học chất lượng, được cộng đồng đánh giá cao và
           tham gia nhiều nhất. Luôn cập nhật kiến thức mới và kỹ năng thiết
           thực, hoàn toàn miễn phí.
         </p>
         <div className="landing__tags">
-          {[
-            "Lịch sử Việt Nam",
-            "Kỹ năng mềm",
-            "Ngoại ngữ",
-            "Kiến thức Kinh tế",
-            "Chính trị",
-          ].map((tag, index) => (
-            <span key={index} className="landing__tag">
-              {tag}
-            </span>
-          ))}
+          {["Lịch sử", "Văn hóa", "Chính trị", "Kinh tế", "Ngoại ngữ"].map(
+            (tag, index) => (
+              <span key={index} className="landing__tag">
+                {tag}
+              </span>
+            )
+          )}
         </div>
-        <div className="landing__courses">{/* COURSES DISPLAY */}</div>
+        <div className="landing__courses">
+          {/* COURSES DISPLAY */}
+          {courses &&
+            courses.slice(0, 4).map((course, index) => (
+              <motion.div
+                key={course._id}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.2 }}
+                viewport={{ amount: 0.4 }}
+              >
+                <CourseCardSearch
+                  course={course}
+                  onClick={() => handleCourseClick(course._id)}
+                />
+              </motion.div>
+            ))}
+        </div>
       </motion.div>
     </motion.div>
   );

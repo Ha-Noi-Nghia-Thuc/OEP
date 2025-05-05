@@ -31,8 +31,5 @@ const userSchema = new Schema(
   }
 );
 
-// Index cho email để tìm kiếm nhanh
-userSchema.index({ email: 1 });
-
 const User = model("User", userSchema);
 export default User;

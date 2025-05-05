@@ -100,7 +100,9 @@ export default function RootLayout({
   return (
     <html lang="vi">
       <body className={`${ebGaramond.variable} ${notoSerif.variable}`}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <div className="root-layout">{children}</div>
+        </Providers>
       </body>
     </html>
   );

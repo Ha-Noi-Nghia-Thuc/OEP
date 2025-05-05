@@ -1,137 +1,128 @@
+// types/index.d.ts
+
+// Import các kiểu cơ bản nếu cần (ví dụ: từ React cho ReactNode, nhưng ta sẽ bỏ qua props component)
+// import { ReactNode } from 'react';
+
 declare global {
-  interface PaymentMethod {
-    methodId: string;
-    type: string;
-    lastFour: string;
-    expiry: string;
+  // --- Định nghĩa các Model Dữ liệu chính ---
+
+  // Định nghĩa cấu trúc cho một câu hỏi Quiz trong Chapter
+  interface QuizQuestion {
+    questionText: string;
+    options: string[];
+    correctAnswerIndex: number;
+    _id?: string; // ID phụ nếu cần trong mảng con
   }
 
-  interface UserSettings {
-    theme?: "light" | "dark";
-    emailAlerts?: boolean;
-    smsAlerts?: boolean;
-    courseNotifications?: boolean;
-    notificationFrequency?: "immediate" | "daily" | "weekly";
-  }
-
+  // Định nghĩa cho User (Đơn giản hóa từ schema User)
   interface User {
-    userId: string;
-    firstName?: string;
-    lastName?: string;
-    username?: string;
+    _id: string; // MongoDB ObjectId dưới dạng chuỗi
+    name: string;
     email: string;
-    publicMetadata: {
-      userType: "teacher" | "student";
-    };
-    privateMetadata: {
-      settings?: UserSettings;
-      paymentMethods?: Array<PaymentMethod>;
-      defaultPaymentMethodId?: string;
-      stripeCustomerId?: string;
-    };
-    unsafeMetadata: {
-      bio?: string;
-      urls?: string[];
-    };
+    role: "student" | "teacher" | "admin"; // Dựa trên schema User
+    // Các trường khác từ schema User có thể thêm vào nếu cần gửi cho frontend
+    createdAt?: string; // ISO Date string
+    updatedAt?: string; // ISO Date string
   }
 
+  // Định nghĩa cho Chapter (Dựa trên schema Chapter)
+  interface Chapter {
+    _id: string;
+    sectionId: string; // ObjectId của Section chứa chapter này
+    title: string;
+    type: "Text" | "Quiz" | "Video";
+    content?: string | any; // Kiểu Mixed, có thể là text hoặc cấu trúc Quiz
+    videoUrl?: string; // URL video nếu type là 'Video'
+    quizQuestions?: QuizQuestion[]; // Mảng câu hỏi nếu type là 'Quiz'
+    order: number; // Thứ tự chapter trong section
+    // Các trường khác có thể thêm nếu cần
+    createdAt?: string; // ISO Date string
+    updatedAt?: string; // ISO Date string
+  }
+
+  // Định nghĩa cho Section (Dựa trên schema Section)
+  interface Section {
+    _id: string;
+    courseId: string; // ObjectId của Course chứa section này
+    title: string;
+    description?: string;
+    order: number; // Thứ tự section trong course
+    chapters: Chapter[]; // Mảng các ObjectId (dạng chuỗi) của Chapter
+    createdAt?: string; // ISO Date string
+    updatedAt?: string; // ISO Date string
+  }
+
+  // Định nghĩa cho Course (Dựa trên schema Course)
   interface Course {
-    courseId: string;
-    teacherId: string;
-    teacherName: string;
+    _id: string;
+    creatorId: string; // ObjectId của User tạo khóa học
+    creatorName: string; // Tên người tạo (denormalized)
     title: string;
     description?: string;
     category: string;
-    image?: string;
-    price?: number; // Stored in cents (e.g., 4999 for $49.99)
-    level: "Beginner" | "Intermediate" | "Advanced";
+    imageUrl?: string;
     status: "Draft" | "Published";
-    sections: Section[];
-    enrollments?: Array<{
-      userId: string;
-    }>;
+    sections: Section[]; // Mảng các ObjectId (dạng chuỗi) của Section
+    enrollmentCount?: number;
+    // Không có price, level
+    // Không nhúng enrollments trực tiếp
+    createdAt?: string; // ISO Date string
+    updatedAt?: string; // ISO Date string
   }
 
-  interface Transaction {
-    userId: string;
-    transactionId: string;
-    dateTime: string;
-    courseId: string;
-    paymentProvider: "stripe";
-    paymentMethodId?: string;
-    amount: number; // Stored in cents
-    savePaymentMethod?: boolean;
-  }
-
-  interface DateRange {
-    from: string | undefined;
-    to: string | undefined;
-  }
-
-  interface UserCourseProgress {
-    userId: string;
-    courseId: string;
-    enrollmentDate: string;
-    overallProgress: number;
-    sections: SectionProgress[];
-    lastAccessedTimestamp: string;
-  }
-
-  type CreateUserArgs = Omit<User, "userId">;
-  type CreateCourseArgs = Omit<Course, "courseId">;
-  type CreateTransactionArgs = Omit<Transaction, "transactionId">;
-
-  interface CourseCardProps {
-    course: Course;
-    onGoToCourse: (course: Course) => void;
-  }
-
-  interface TeacherCourseCardProps {
-    course: Course;
-    onEdit: (course: Course) => void;
-    onDelete: (course: Course) => void;
-    isOwner: boolean;
-  }
-
+  // Định nghĩa cho Comment (Dựa trên schema Comment)
   interface Comment {
-    commentId: string;
-    userId: string;
+    _id: string;
+    userId: string; // ObjectId của User viết comment
+    chapterId: string; // ObjectId của Chapter mà comment thuộc về
     text: string;
-    timestamp: string;
+    // Thông tin user có thể được populate từ backend trước khi gửi
+    user?: {
+      _id: string;
+      name: string;
+      // avatarUrl?: string; // Ví dụ
+    };
+    createdAt?: string; // ISO Date string
+    updatedAt?: string; // ISO Date string
   }
 
-  interface Chapter {
-    chapterId: string;
-    title: string;
-    content: string;
-    video?: string | File;
-    freePreview?: boolean;
-    type: "Text" | "Quiz" | "Video";
+  // Định nghĩa cho Enrollment (Dựa trên schema Enrollment)
+  interface Enrollment {
+    _id: string;
+    userId: string; // ObjectId của User đăng ký
+    courseId: string; // ObjectId của Course được đăng ký
+    enrolledAt: string; // ISO Date string
+    lastAccessedAt?: string; // ISO Date string
+    overallProgressPercent?: number; // Phần trăm tiến độ (0-100)
+    completedAt?: string | null; // ISO Date string hoặc null nếu chưa hoàn thành
+    createdAt?: string; // ISO Date string
+    updatedAt?: string; // ISO Date string
   }
 
+  // Định nghĩa cho ChapterProgress (Dựa trên schema ChapterProgress)
   interface ChapterProgress {
-    chapterId: string;
-    completed: boolean;
+    _id: string;
+    userId: string; // ObjectId của User
+    courseId: string; // ObjectId của Course
+    chapterId: string; // ObjectId của Chapter
+    completed: boolean; // Trạng thái hoàn thành
+    createdAt?: string; // ISO Date string
+    updatedAt?: string; // ISO Date string
   }
 
-  interface SectionProgress {
-    sectionId: string;
-    chapters: ChapterProgress[];
+  // --- Các kiểu tiện ích hoặc dùng chung khác (nếu cần) ---
+
+  // Ví dụ: Kiểu cho phản hồi API chung
+  interface ApiResponse<T> {
+    message: string;
+    data?: T;
+    error?: string | object;
   }
 
-  interface Section {
-    sectionId: string;
-    sectionTitle: string;
-    sectionDescription?: string;
-    chapters: Chapter[];
-  }
-
-  interface WizardStepperProps {
-    currentStep: number;
-  }
-
-  interface AccordionSectionsProps {
-    sections: Section[];
+  // Ví dụ: Kiểu DateRange nếu cần
+  interface DateRange {
+    from?: string; // ISO Date string
+    to?: string; // ISO Date string
   }
 
   interface SearchCourseCardProps {
@@ -140,72 +131,23 @@ declare global {
     onClick?: () => void;
   }
 
-  interface CoursePreviewProps {
-    course: Course;
-  }
-
-  interface CustomFixedModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    children: ReactNode;
-  }
-
-  interface HeaderProps {
-    title: string;
-    subtitle: string;
-    rightElement?: ReactNode;
-  }
-
-  interface SharedNotificationSettingsProps {
-    title?: string;
-    subtitle?: string;
-  }
-
   interface SelectedCourseProps {
     course: Course;
     handleEnrollNow: (courseId: string) => void;
   }
 
-  interface ToolbarProps {
-    onSearch: (search: string) => void;
-    onCategoryChange: (category: string) => void;
-  }
-
-  interface ChapterModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    sectionIndex: number | null;
-    chapterIndex: number | null;
+  interface AccordionSectionsProps {
     sections: Section[];
-    setSections: React.Dispatch<React.SetStateAction<Section[]>>;
-    courseId: string;
   }
 
-  interface SectionModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    sectionIndex: number | null;
-    sections: Section[];
-    setSections: React.Dispatch<React.SetStateAction<Section[]>>;
-  }
-
-  interface DroppableComponentProps {
-    sections: Section[];
-    setSections: (sections: Section[]) => void;
-    handleEditSection: (index: number) => void;
-    handleDeleteSection: (index: number) => void;
-    handleAddChapter: (sectionIndex: number) => void;
-    handleEditChapter: (sectionIndex: number, chapterIndex: number) => void;
-    handleDeleteChapter: (sectionIndex: number, chapterIndex: number) => void;
-  }
-
-  interface CourseFormData {
-    courseTitle: string;
-    courseDescription: string;
-    courseCategory: string;
-    coursePrice: string;
-    courseStatus: boolean;
-  }
+  // Các kiểu cho Props của component React nên được định nghĩa ở frontend
+  // Ví dụ:
+  // interface CourseCardProps {
+  //   course: Course; // Sử dụng lại kiểu Course ở trên
+  //   // ... other props
+  // }
 }
 
+// Thêm dòng này để đảm bảo file được coi là một module,
+// tránh lỗi khi không có import/export nào khác.
 export {};

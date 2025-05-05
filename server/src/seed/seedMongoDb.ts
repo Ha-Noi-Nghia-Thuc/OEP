@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import fs from "fs";
-import mongoose, { Model } from "mongoose";
+import mongoose, { Model, Types } from "mongoose";
 import path from "path";
 
 import ChapterProgress from "../models/chapter-progress.model";
@@ -99,60 +99,194 @@ const seedCollection = async (model: Model<any>, fileName: string) => {
   try {
     if (!fs.existsSync(filePath)) {
       console.warn(`  Warning: Seed file not found at ${filePath}. Skipping.`);
-      return;
+      return [];
     }
 
     const jsonData = fs.readFileSync(filePath, "utf-8");
+    if (!jsonData.trim()) {
+      console.log(`  Seed file ${fileName}.json is empty. Skipping.`);
+      return [];
+    }
     const rawData = JSON.parse(jsonData);
 
     // Chuyển đổi EJSON trước khi chèn
     const parsedData = parseEJSON(rawData);
     if (!Array.isArray(parsedData) || parsedData.length === 0) {
       console.log(`  No data to seed for ${collectionName}.`);
-      return;
+      return [];
     }
 
     // Sử dụng insertMany để hiệu quả hơn
-    const result = await model.insertMany(parsedData, { ordered: false }); // ordered: false để tiếp tục nếu có lỗi ở 1 document
+    const insertedDocs = await model.insertMany(parsedData, { ordered: false }); // ordered: false để tiếp tục nếu có lỗi ở 1 document
     console.log(
-      `  Successfully seeded ${result.length} documents into ${collectionName}.`
+      `  Successfully seeded ${insertedDocs.length} documents into ${collectionName}.`
     );
+    return insertedDocs;
   } catch (error: any) {
     console.error(`  Error seeding ${collectionName}:`, error.message);
     if (error.code === 11000) {
       console.error("  Details: Duplicate key error.");
     } else if (error.name === "ValidationError") {
-      console.error("  Details: Validation Error -", error.errors);
+      console.error(
+        "  Details: Validation Error -",
+        JSON.stringify(error.errors, null, 2)
+      );
     }
+    return [];
   }
 };
 
 const seed = async () => {
+  const insertedData: { [key: string]: any[] } = {
+    users: [],
+    courses: [],
+    sections: [],
+    chapters: [],
+    enrollments: [],
+    comments: [],
+    chapterProgress: [],
+  };
+
   try {
     await connectDB();
 
-    // Danh sách các model theo đúng thứ tự phụ thuộc để seed
-    const modelsInOrder = [
-      { model: User, file: "users" },
-      { model: Course, file: "courses" },
-      { model: Section, file: "sections" },
-      { model: Chapter, file: "chapters" },
-      { model: Enrollment, file: "enrollments" },
-      { model: Comment, file: "comments" },
-      { model: ChapterProgress, file: "chapterprogress" },
+    // Danh sách các model để xóa (giữ nguyên)
+    const modelsToClean = [
+      User,
+      Course,
+      Section,
+      Chapter,
+      Enrollment,
+      Comment,
+      ChapterProgress,
     ];
+    await cleanDatabase(modelsToClean);
+    await new Promise((resolve) => setTimeout(resolve, 500));
 
-    // Xóa dữ liệu cũ
-    await cleanDatabase(modelsInOrder.map((m) => m.model));
+    // --- Seed Data và Lưu Kết quả ---
+    // Thứ tự seed vẫn rất quan trọng
+    insertedData.users = await seedCollection(User, "users");
+    insertedData.courses = await seedCollection(Course, "courses");
+    insertedData.sections = await seedCollection(Section, "sections");
+    insertedData.chapters = await seedCollection(Chapter, "chapters");
+    insertedData.enrollments = await seedCollection(Enrollment, "enrollments");
+    insertedData.comments = await seedCollection(Comment, "comments");
+    insertedData.chapterProgress = await seedCollection(
+      ChapterProgress,
+      "chapterprogress"
+    );
 
-    // Seed dữ liệu theo thứ tự
-    for (const item of modelsInOrder) {
-      await seedCollection(item.model, item.file);
+    console.log("\nLinking related documents...");
+
+    // 1. Liên kết Chapters vào Sections
+    if (insertedData.chapters.length > 0 && insertedData.sections.length > 0) {
+      console.log("  Linking chapters to sections...");
+      const chaptersBySection = new Map<string, Types.ObjectId[]>();
+
+      insertedData.chapters.sort((a, b) => a.order - b.order);
+
+      for (const chapter of insertedData.chapters) {
+        if (chapter.sectionId instanceof Types.ObjectId) {
+          const sectionIdString = chapter.sectionId.toString();
+          if (!chaptersBySection.has(sectionIdString)) {
+            chaptersBySection.set(sectionIdString, []);
+          }
+          // *** SỬA LỖI TS(2322) Ở ĐÂY ***
+          // Lấy ra mảng từ Map
+          const chapterList = chaptersBySection.get(sectionIdString);
+          // Kiểm tra tường minh xem mảng có tồn tại không trước khi push
+          if (chapterList && chapter._id instanceof Types.ObjectId) {
+            // <--- Kiểm tra chapterList !== undefined
+            chapterList.push(chapter._id);
+          }
+          // *** KẾT THÚC SỬA LỖI ***
+        }
+      }
+
+      // Cập nhật từng section
+      for (const [sectionIdString, chapterIds] of chaptersBySection.entries()) {
+        // ... (phần update không đổi) ...
+        try {
+          if (chapterIds.length > 0) {
+            const sectionObjectId = new Types.ObjectId(sectionIdString);
+            await Section.updateOne(
+              { _id: sectionObjectId },
+              { $set: { chapters: chapterIds } }
+            );
+            console.log(
+              `    Linked ${chapterIds.length} chapters to Section ${sectionIdString}`
+            );
+          }
+        } catch (linkError: any) {
+          console.error(
+            `    Error linking chapters to Section ${sectionIdString}:`,
+            linkError.message
+          );
+        }
+      }
+      console.log("  Finished linking chapters to sections.");
+    } else {
+      console.log(
+        "  Skipping chapter-section linking (no chapters or sections found)."
+      );
+    }
+
+    // 2. Liên kết Sections vào Courses
+    if (insertedData.sections.length > 0 && insertedData.courses.length > 0) {
+      console.log("  Linking sections to courses...");
+      const sectionsByCourse = new Map<string, Types.ObjectId[]>();
+
+      insertedData.sections.sort((a, b) => a.order - b.order);
+
+      for (const section of insertedData.sections) {
+        if (section.courseId instanceof Types.ObjectId) {
+          const courseIdString = section.courseId.toString();
+          if (!sectionsByCourse.has(courseIdString)) {
+            sectionsByCourse.set(courseIdString, []);
+          }
+          // *** SỬA LỖI TS(2322) TƯƠNG TỰ Ở ĐÂY ***
+          // Lấy ra mảng từ Map
+          const sectionList = sectionsByCourse.get(courseIdString);
+          // Kiểm tra tường minh xem mảng có tồn tại không trước khi push
+          if (sectionList && section._id instanceof Types.ObjectId) {
+            // <--- Kiểm tra sectionList !== undefined
+            sectionList.push(section._id);
+          }
+          // *** KẾT THÚC SỬA LỖI ***
+        }
+      }
+
+      // Cập nhật từng course
+      for (const [courseIdString, sectionIds] of sectionsByCourse.entries()) {
+        // ... (phần update không đổi) ...
+        try {
+          if (sectionIds.length > 0) {
+            const courseObjectId = new Types.ObjectId(courseIdString);
+            await Course.updateOne(
+              { _id: courseObjectId },
+              { $set: { sections: sectionIds } }
+            );
+            console.log(
+              `    Linked ${sectionIds.length} sections to Course ${courseIdString}`
+            );
+          }
+        } catch (linkError: any) {
+          console.error(
+            `    Error linking sections to Course ${courseIdString}:`,
+            linkError.message
+          );
+        }
+      }
+      console.log("  Finished linking sections to courses.");
+    } else {
+      console.log(
+        "  Skipping section-course linking (no sections or courses found)."
+      );
     }
 
     console.log(
-      "\n\x1b[32m%s\x1b[0m",
-      "Database seeding completed successfully!"
+      "\n\x1b[32m%s\x1b[0m", // Màu xanh lá
+      "Database seeding and linking completed successfully!"
     );
   } catch (error) {
     console.error("\n\x1b[31m%s\x1b[0m", "Database seeding failed:");
